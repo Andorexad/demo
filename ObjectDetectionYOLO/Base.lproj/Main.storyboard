@@ -32,8 +32,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EL6-Vs-val">
-                                <rect key="frame" x="0.0" y="668" width="414" height="194"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EL6-Vs-val">
+                                <rect key="frame" x="0.0" y="686" width="414" height="176"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="176" id="a6a-R5-V8l"/>
                                 </constraints>
@@ -41,44 +41,49 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SxM-Ga-Ycf" userLabel="VideoView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SxM-Ga-Ycf" userLabel="VideoView">
                                 <rect key="frame" x="0.0" y="102" width="414" height="558"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kWO-ou-PTr" userLabel="boxView" customClass="DrawingBoundingBoxView" customModule="ObjectDetectionYOLO" customModuleProvider="target">
-                                        <rect key="frame" x="-8" y="0.0" width="414" height="558"/>
-                                        <subviews>
-                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="UON-th-0kY">
-                                                <rect key="frame" x="22" y="8" width="49" height="31"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <connections>
-                                                    <action selector="numberOnlyToggled:" destination="BYZ-38-t0r" eventType="valueChanged" id="exm-uG-NLK"/>
-                                                </connections>
-                                            </switch>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Numerical results only." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rmx-fd-lQQ">
-                                                <rect key="frame" x="91" y="18" width="172" height="21"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kWO-ou-PTr" userLabel="boxView" customClass="DrawingBoundingBoxView" customModule="ObjectDetectionYOLO" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="58" width="414" height="500"/>
                                     </view>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="UON-th-0kY">
+                                        <rect key="frame" x="18" y="3" width="51" height="31"/>
+                                        <connections>
+                                            <action selector="numberOnlyToggled:" destination="BYZ-38-t0r" eventType="valueChanged" id="exm-uG-NLK"/>
+                                        </connections>
+                                    </switch>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Numerical results only." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rmx-fd-lQQ">
+                                        <rect key="frame" x="75" y="8" width="170" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="kWO-ou-PTr" secondAttribute="trailing" constant="8" id="AvO-nf-fgB"/>
-                                    <constraint firstAttribute="top" secondItem="kWO-ou-PTr" secondAttribute="top" id="Whz-TS-6hR"/>
-                                    <constraint firstAttribute="leading" secondItem="kWO-ou-PTr" secondAttribute="leading" constant="8" id="nIF-oH-m8S"/>
+                                    <constraint firstItem="UON-th-0kY" firstAttribute="centerY" secondItem="rmx-fd-lQQ" secondAttribute="centerY" id="9F9-X0-yB4"/>
+                                    <constraint firstAttribute="trailing" secondItem="kWO-ou-PTr" secondAttribute="trailing" id="AvO-nf-fgB"/>
+                                    <constraint firstAttribute="trailing" secondItem="rmx-fd-lQQ" secondAttribute="trailing" constant="169" id="GMq-WP-Bn9"/>
+                                    <constraint firstItem="rmx-fd-lQQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="UON-th-0kY" secondAttribute="trailing" symbolic="YES" id="KBv-TB-fhl"/>
+                                    <constraint firstItem="UON-th-0kY" firstAttribute="leading" secondItem="SxM-Ga-Ycf" secondAttribute="leading" constant="18" id="U6O-2C-Fqr"/>
+                                    <constraint firstAttribute="top" secondItem="kWO-ou-PTr" secondAttribute="top" constant="-58" id="Whz-TS-6hR"/>
+                                    <constraint firstItem="kWO-ou-PTr" firstAttribute="top" secondItem="UON-th-0kY" secondAttribute="bottom" constant="24" id="bgc-GG-q75"/>
+                                    <constraint firstAttribute="bottom" secondItem="kWO-ou-PTr" secondAttribute="bottom" id="fvf-PL-98L"/>
+                                    <constraint firstAttribute="leading" secondItem="kWO-ou-PTr" secondAttribute="leading" id="nIF-oH-m8S"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="SxM-Ga-Ycf" secondAttribute="bottom" id="8gy-Gx-qa7"/>
+                            <constraint firstItem="EL6-Vs-val" firstAttribute="leading" secondItem="SxM-Ga-Ycf" secondAttribute="leading" id="43T-VY-oWv"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="SxM-Ga-Ycf" secondAttribute="bottom" constant="202" id="8gy-Gx-qa7"/>
                             <constraint firstItem="SxM-Ga-Ycf" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="14" id="Sf2-l3-z98"/>
                             <constraint firstItem="SxM-Ga-Ycf" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="UKg-KQ-k8Y"/>
                             <constraint firstItem="SxM-Ga-Ycf" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="WX8-8m-9PT"/>
+                            <constraint firstItem="EL6-Vs-val" firstAttribute="trailing" secondItem="SxM-Ga-Ycf" secondAttribute="trailing" id="n2d-57-Ym5"/>
+                            <constraint firstItem="EL6-Vs-val" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="tfd-B7-2pC"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="elE-uG-OLj"/>

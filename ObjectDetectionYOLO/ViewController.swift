@@ -96,12 +96,14 @@ class ViewController: UIViewController, VideoCaptureDelegate, UITextViewDelegate
                 if let previewLayer = self.videoCapture.previewLayer {
                     self.videoPreview.layer.addSublayer(previewLayer)
                     self.resizePreviewLayer()
+                    
                 }
                 
                 // start video preview when setup is done
                 self.videoCapture.start()
             }
         }
+        self.videoPreview.bringSubviewToFront(boxesView)
         
     }
     
@@ -112,18 +114,13 @@ class ViewController: UIViewController, VideoCaptureDelegate, UITextViewDelegate
     }
     
     func resizePreviewLayer() {
-        
+//        videoCapture.previewLayer?.frame = videoPreview.bounds
         let bounds=videoPreview.bounds
-        videoCapture.previewLayer?.frame = CGRect(x: bounds.minX, y: bounds.minY+self.numberOnly.bounds.height, width: bounds.width, height: bounds.height-self.numberOnly.bounds.height-label.bounds.height)
+        videoCapture.previewLayer?.frame = CGRect(x: bounds.minX, y: bounds.minY+40, width: bounds.width, height: bounds.height)
     }
     
-//
-//
-//}
-//
-//
-//extension ViewController {
-//
+
+    
     // MARK: Object detection
     func predictUsingVision(pixelBuffer: CVPixelBuffer) {
         guard let request = object_detect_request else { fatalError() }
@@ -167,31 +164,10 @@ class ViewController: UIViewController, VideoCaptureDelegate, UITextViewDelegate
     
     func recognizeTextFinish(request: VNRequest, error: Error?) {
         guard let results = request.results as? [VNRecognizedTextObservation] else { return }
-//        for result in results {
-//            print(result.topCandidates(1).first?.string,result.boundingBox)
-//        }
-//        print("hey")
-//        print(results)
-//        var positions = [CGRect]()
-//        for visionResult in results {
-//            positions.append(visionResult.boundingBox)
-//        }
-//
-//        let recognizedStrings = results.compactMap { observation in
-//            // Return the string of the top VNRecognizedText instance.
-//            return observation.topCandidates(1).first?.string
-//        }
-//        observations.boundingBox
-//
-        // Log any found strins.
+        
         numberTracker.logFrame(results: results)
-//        numberTracker.logFrame(strings: recognizedStrings)
-//
-//        // Check if we have any temporally stable numbers.
+        
         if let sureNumber = numberTracker.getStableString() {
-//            textDisplayed(sureNumber)
-//            textDisplayed.insert(sureNumber)
-//            print("see stable   ",sureNumber)
             
             if numberOnly.isOn {
                 if sureNumber.first!.isNumber {
@@ -225,7 +201,7 @@ class ViewController: UIViewController, VideoCaptureDelegate, UITextViewDelegate
         print(string)
         DispatchQueue.main.async{
             self.label.text=string
-            self.label.setNeedsDisplay()
+//            self.label.setNeedsDisplay()
         }
         
         
@@ -280,7 +256,14 @@ class ViewController: UIViewController, VideoCaptureDelegate, UITextViewDelegate
     
 //    let numberOnly = UISwitch(frame: CGRect(x:60,y:0,width: 30,height: 30))
     @IBAction func numberOnlyToggled(_ sender: Any) {
-        
+        if numberOnly.isOn{
+            let tempset=self.textDisplayed
+            for str in tempset {
+                if (!str.first!.isNumber ){
+                    self.textDisplayed.remove(str)
+                }
+            }
+        }
     }
     @IBOutlet weak var numberOnly: UISwitch!
     func setUpToggle(){
@@ -288,7 +271,7 @@ class ViewController: UIViewController, VideoCaptureDelegate, UITextViewDelegate
         numberOnly.isUserInteractionEnabled=true
         numberOnly.isOn=false
         
-        self.videoPreview.addSubview(numberOnly)
+//        self.videoPreview.addSubview(numberOnly)
     }
     
     

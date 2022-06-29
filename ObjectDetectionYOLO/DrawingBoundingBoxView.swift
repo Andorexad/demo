@@ -69,6 +69,7 @@ class DrawingBoundingBoxView: UIView {
         label.frame = CGRect(x: bgRect.origin.x, y: bgRect.origin.y - label.frame.height,
                              width: label.frame.width, height: label.frame.height)
         addSubview(label)
+        bringSubviewToFront(label)
         
 
     }
