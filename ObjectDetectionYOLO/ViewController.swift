@@ -44,7 +44,7 @@ class ViewController: UIViewController, VideoCaptureDelegate, UITextViewDelegate
     
     var regionOfInterest = CGRect(x: 0,y: 0,width: 0,height: 0)
     let numberTracker = StringTracker()
-    
+    var speakNumberOnly=false
     
     
     override func viewDidLoad() {
@@ -169,44 +169,59 @@ class ViewController: UIViewController, VideoCaptureDelegate, UITextViewDelegate
         
         if let sureNumber = numberTracker.getStableString() {
             
-            if numberOnly.isOn {
-                if sureNumber.first!.isNumber {
-                    speakAndReset(sureNumber: sureNumber)
-                }
-                return
-            }
+            
+            
 
             if (sureNumber == lastSpeakSTring && lastSpeakFrame < numberTracker.bestStringFrame-(30*5)) || (sureNumber != lastSpeakSTring && lastSpeakFrame < numberTracker.bestStringFrame-(30*3))  || lastSpeakFrame==0 {
+                
+                
+                if speakNumberOnly {
+                    if let extracted = self.extractOnlyNumber(string:sureNumber){
+                        self.speakAndReset(sureNumber: String(extracted))
+                    }
+                    return
+                }
+                
+                
                 speakAndReset(sureNumber: sureNumber)
             }
             
         }
 
     }
+    func extractOnlyNumber(string: String)->Int?{
+        
+        if let number = Int(string.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()) {
+            print(number)
+            return number
+        }else{
+            return nil
+        }
+    }
     
     func speakAndReset(sureNumber: String){
-//        print("say something: ", lastSpeakSTring, sureNumber,lastSpeakFrame)
         playSound(str: sureNumber)
         lastSpeakSTring=sureNumber
         lastSpeakFrame=numberTracker.bestStringFrame
         numberTracker.reset(string: sureNumber)
     
-        // show in Label
-        textDisplayed.insert(sureNumber)
-        var string=""
-        for str in self.textDisplayed {
-//            print(str+"inserted")
-            string=string+"\n"+str
-        }
-        print(string)
-        DispatchQueue.main.async{
-            self.label.text=string
-//            self.label.setNeedsDisplay()
-        }
         
+        self.textDisplayed.insert(sureNumber)
+        DispatchQueue.main.async{self.updateText()}
         
     }
     
+    func updateText(){
+        var string="Detected text: "
+        for str in self.textDisplayed {
+//            print(str+"inserted")
+            string=string+"\n "+str
+        }
+//        print("woohoo",string)
+        self.label.text=string
+        self.label.textColor = .black
+//        print(self.label.text)
+    }
     // MARK: Helper functions
     
     func getROI(boundingBox: CGRect) -> CGRect{
@@ -256,13 +271,15 @@ class ViewController: UIViewController, VideoCaptureDelegate, UITextViewDelegate
     
 //    let numberOnly = UISwitch(frame: CGRect(x:60,y:0,width: 30,height: 30))
     @IBAction func numberOnlyToggled(_ sender: Any) {
-        if numberOnly.isOn{
+        speakNumberOnly=numberOnly.isOn
+        if speakNumberOnly{
             let tempset=self.textDisplayed
             for str in tempset {
                 if (!str.first!.isNumber ){
                     self.textDisplayed.remove(str)
                 }
             }
+            updateText()
         }
     }
     @IBOutlet weak var numberOnly: UISwitch!
