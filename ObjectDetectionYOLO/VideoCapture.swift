@@ -95,7 +95,7 @@ extension VideoCapture: AVCaptureVideoDataOutputSampleBufferDelegate {
     public func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         let timestamp = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
         let deltaTime = timestamp - lastTimestamp
-        if deltaTime >= CMTimeMake(value: 5, timescale: Int32(fps)) {
+        if deltaTime >= CMTimeMake(value: 1, timescale: Int32(fps)) {
             lastTimestamp = timestamp
             let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)
             delegate?.videoCapture(self, didCaptureVideoFrame: imageBuffer, timestamp: timestamp)

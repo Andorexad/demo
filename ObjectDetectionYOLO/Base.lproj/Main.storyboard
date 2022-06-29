@@ -8,45 +8,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Select Your Item-->
-        <scene sceneID="WHe-2l-05y">
-            <objects>
-                <tableViewController id="jX8-qu-q5s" customClass="SelectTableView" customModule="ObjectDetectionYOLO" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="vAm-2l-eTY">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" placeholder="Search your item" id="gs9-Ex-UUe">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            <textInputTraits key="textInputTraits"/>
-                        </searchBar>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="joZ-Km-jtC">
-                                <rect key="frame" x="0.0" y="88.5" width="414" height="43.5"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="joZ-Km-jtC" id="wMj-g3-uyn">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="jX8-qu-q5s" id="R3d-NH-p5G"/>
-                            <outlet property="delegate" destination="jX8-qu-q5s" id="TTy-ah-ygt"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Select Your Item" id="wA3-Ux-MQ7">
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="hdW-K3-M8i"/>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="searchBar" destination="gs9-Ex-UUe" id="Ap2-LA-cv1"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="WH6-xa-BK5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-820" y="98"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="r89-JL-kvD">
             <objects>
@@ -71,30 +32,60 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SxM-Ga-Ycf" userLabel="VideoView">
-                                <rect key="frame" x="0.0" y="102" width="414" height="760"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EL6-Vs-val">
+                                <rect key="frame" x="0.0" y="668" width="414" height="194"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="176" id="a6a-R5-V8l"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SxM-Ga-Ycf" userLabel="VideoView">
+                                <rect key="frame" x="0.0" y="102" width="414" height="558"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kWO-ou-PTr" userLabel="boxView" customClass="DrawingBoundingBoxView" customModule="ObjectDetectionYOLO" customModuleProvider="target">
+                                        <rect key="frame" x="-8" y="0.0" width="414" height="558"/>
+                                        <subviews>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="UON-th-0kY">
+                                                <rect key="frame" x="22" y="8" width="49" height="31"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <connections>
+                                                    <action selector="numberOnlyToggled:" destination="BYZ-38-t0r" eventType="valueChanged" id="exm-uG-NLK"/>
+                                                </connections>
+                                            </switch>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Numerical results only." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rmx-fd-lQQ">
+                                                <rect key="frame" x="91" y="18" width="172" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </view>
+                                </subviews>
                                 <color key="backgroundColor" systemColor="systemOrangeColor"/>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kWO-ou-PTr" userLabel="boxView" customClass="DrawingBoundingBoxView" customModule="ObjectDetectionYOLO" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="102" width="414" height="760"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="kWO-ou-PTr" secondAttribute="trailing" constant="8" id="AvO-nf-fgB"/>
+                                    <constraint firstAttribute="top" secondItem="kWO-ou-PTr" secondAttribute="top" id="Whz-TS-6hR"/>
+                                    <constraint firstAttribute="leading" secondItem="kWO-ou-PTr" secondAttribute="leading" constant="8" id="nIF-oH-m8S"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="kWO-ou-PTr" secondAttribute="bottom" id="8LB-AU-xaB"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="SxM-Ga-Ycf" secondAttribute="bottom" id="8gy-Gx-qa7"/>
-                            <constraint firstItem="SxM-Ga-Ycf" firstAttribute="trailing" secondItem="kWO-ou-PTr" secondAttribute="trailing" id="Oxa-ln-mJi"/>
-                            <constraint firstItem="SxM-Ga-Ycf" firstAttribute="top" secondItem="kWO-ou-PTr" secondAttribute="top" id="Sb1-NE-ZIl"/>
                             <constraint firstItem="SxM-Ga-Ycf" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="14" id="Sf2-l3-z98"/>
                             <constraint firstItem="SxM-Ga-Ycf" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="UKg-KQ-k8Y"/>
                             <constraint firstItem="SxM-Ga-Ycf" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="WX8-8m-9PT"/>
-                            <constraint firstItem="SxM-Ga-Ycf" firstAttribute="leading" secondItem="kWO-ou-PTr" secondAttribute="leading" id="zWg-Lz-Sxc"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="elE-uG-OLj"/>
                     <connections>
                         <outlet property="boxesView" destination="kWO-ou-PTr" id="ZtB-tx-Ouq"/>
+                        <outlet property="label" destination="EL6-Vs-val" id="GfT-fq-EBA"/>
+                        <outlet property="numberOnly" destination="UON-th-0kY" id="6HO-rg-KX3"/>
                         <outlet property="videoPreview" destination="SxM-Ga-Ycf" id="AHk-Vf-cwF"/>
                     </connections>
                 </viewController>

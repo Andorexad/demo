@@ -19,7 +19,6 @@
 		F06EF2B52773A459000F7894 /* YOLOv3.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = F06EF2B42773A459000F7894 /* YOLOv3.mlmodel */; };
 		F06EF2B92773A760000F7894 /* DrawingBoundingBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06EF2B82773A760000F7894 /* DrawingBoundingBoxView.swift */; };
 		F06EF2BB2773AB68000F7894 /* VideoCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06EF2BA2773AB68000F7894 /* VideoCapture.swift */; };
-		F06EF2C12774F60F000F7894 /* SelectTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06EF2C02774F60F000F7894 /* SelectTableView.swift */; };
 		F07FAEDC286602060079D0D1 /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F07FAEDB286602060079D0D1 /* StringUtils.swift */; };
 		F07FAEE0286A2DE70079D0D1 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F07FAEDF286A2DE70079D0D1 /* PreviewView.swift */; };
 /* End PBXBuildFile section */
@@ -58,7 +57,6 @@
 		F06EF2B42773A459000F7894 /* YOLOv3.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = YOLOv3.mlmodel; sourceTree = "<group>"; };
 		F06EF2B82773A760000F7894 /* DrawingBoundingBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingBoundingBoxView.swift; sourceTree = "<group>"; };
 		F06EF2BA2773AB68000F7894 /* VideoCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCapture.swift; sourceTree = "<group>"; };
-		F06EF2C02774F60F000F7894 /* SelectTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTableView.swift; sourceTree = "<group>"; };
 		F07FAEDB286602060079D0D1 /* StringUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringUtils.swift; sourceTree = "<group>"; };
 		F07FAEDF286A2DE70079D0D1 /* PreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -119,7 +117,6 @@
 				F06EF2BA2773AB68000F7894 /* VideoCapture.swift */,
 				F06EF2B82773A760000F7894 /* DrawingBoundingBoxView.swift */,
 				F06EF28A2773A424000F7894 /* Main.storyboard */,
-				F06EF2C02774F60F000F7894 /* SelectTableView.swift */,
 				F07FAEDB286602060079D0D1 /* StringUtils.swift */,
 				F06EF28D2773A426000F7894 /* Assets.xcassets */,
 				F06EF28F2773A426000F7894 /* LaunchScreen.storyboard */,
@@ -277,7 +274,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F06EF2892773A424000F7894 /* ViewController.swift in Sources */,
-				F06EF2C12774F60F000F7894 /* SelectTableView.swift in Sources */,
 				F07FAEE0286A2DE70079D0D1 /* PreviewView.swift in Sources */,
 				F06EF2852773A424000F7894 /* AppDelegate.swift in Sources */,
 				F06EF2B52773A459000F7894 /* YOLOv3.mlmodel in Sources */,

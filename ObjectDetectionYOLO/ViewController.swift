@@ -9,23 +9,28 @@ import UIKit
 import Vision
 import CoreMedia
 import AVFoundation
+import SwiftUI
 
-class ViewController: UIViewController, VideoCaptureDelegate {
+class ViewController: UIViewController, VideoCaptureDelegate, UITextViewDelegate {
     
     
     
+  
     @IBOutlet weak var videoPreview: UIView!
-    
     @IBOutlet weak var boxesView: DrawingBoundingBoxView!
     
+    var textDisplayed: Set<String>=[]
     let objectDectectionModel = YOLOv3()
-   
+    
+    var lastSpeakFrame = Int64(0)
+    var lastSpeakSTring = ""
+//    var isSpeaking = false
     
     var object_detect_request: VNCoreMLRequest?
     var ocr_request: VNRecognizeTextRequest!
     
     var visionModel: VNCoreMLModel?
-    var textModel: VNCoreMLModel?
+    
     
     var isInferencing = false
     
@@ -40,16 +45,25 @@ class ViewController: UIViewController, VideoCaptureDelegate {
     var regionOfInterest = CGRect(x: 0,y: 0,width: 0,height: 0)
     let numberTracker = StringTracker()
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.boxesView.requiredItem = self.requiredItem
 
+        setUpLabel()
+        setUpToggle()
+        
         setUpRequest()
         setUpCamera()
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        
         self.videoCapture.start()
     }
     
@@ -98,16 +112,18 @@ class ViewController: UIViewController, VideoCaptureDelegate {
     }
     
     func resizePreviewLayer() {
-        videoCapture.previewLayer?.frame = videoPreview.bounds
+        
+        let bounds=videoPreview.bounds
+        videoCapture.previewLayer?.frame = CGRect(x: bounds.minX, y: bounds.minY+self.numberOnly.bounds.height, width: bounds.width, height: bounds.height-self.numberOnly.bounds.height-label.bounds.height)
     }
     
-
-
-}
-
-
-extension ViewController {
-    
+//
+//
+//}
+//
+//
+//extension ViewController {
+//
     // MARK: Object detection
     func predictUsingVision(pixelBuffer: CVPixelBuffer) {
         guard let request = object_detect_request else { fatalError() }
@@ -172,12 +188,47 @@ extension ViewController {
 //        numberTracker.logFrame(strings: recognizedStrings)
 //
 //        // Check if we have any temporally stable numbers.
-//        if let sureNumber = numberTracker.getStableString() {
+        if let sureNumber = numberTracker.getStableString() {
+//            textDisplayed(sureNumber)
+//            textDisplayed.insert(sureNumber)
 //            print("see stable   ",sureNumber)
-//            playSound(str: sureNumber)
-//            numberTracker.reset(string: sureNumber)
-//        }
+            
+            if numberOnly.isOn {
+                if sureNumber.first!.isNumber {
+                    speakAndReset(sureNumber: sureNumber)
+                }
+                return
+            }
 
+            if (sureNumber == lastSpeakSTring && lastSpeakFrame < numberTracker.bestStringFrame-(30*5)) || (sureNumber != lastSpeakSTring && lastSpeakFrame < numberTracker.bestStringFrame-(30*3))  || lastSpeakFrame==0 {
+                speakAndReset(sureNumber: sureNumber)
+            }
+            
+        }
+
+    }
+    
+    func speakAndReset(sureNumber: String){
+//        print("say something: ", lastSpeakSTring, sureNumber,lastSpeakFrame)
+        playSound(str: sureNumber)
+        lastSpeakSTring=sureNumber
+        lastSpeakFrame=numberTracker.bestStringFrame
+        numberTracker.reset(string: sureNumber)
+    
+        // show in Label
+        textDisplayed.insert(sureNumber)
+        var string=""
+        for str in self.textDisplayed {
+//            print(str+"inserted")
+            string=string+"\n"+str
+        }
+        print(string)
+        DispatchQueue.main.async{
+            self.label.text=string
+            self.label.setNeedsDisplay()
+        }
+        
+        
     }
     
     // MARK: Helper functions
@@ -195,8 +246,12 @@ extension ViewController {
         utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
         utterance.rate = 0.5
         let synthesizer = AVSpeechSynthesizer()
+//        isSpeaking=true
         synthesizer.speak(utterance)
+//        isSpeaking=false
     }
+    
+    
     
     func videoCapture(_ capture: VideoCapture, didCaptureVideoFrame pixelBuffer: CVPixelBuffer?, timestamp: CMTime) {
         if !self.isInferencing, let pixelBuffer = pixelBuffer {
@@ -205,5 +260,41 @@ extension ViewController {
             self.startTextRecognition(pixelBuffer: pixelBuffer)
         }
     }
+    
+    
+    
+    @IBOutlet weak var label: UILabel!
+    func setUpLabel(){
+//        label.frame=CGRect(x:0,y:videoPreview.bounds.maxY-60,width:videoPreview.bounds.width,height: videoPreview.bounds.height)
+        label.text = "No text detected. \n  hihi"
+        label.font = UIFont.preferredFont(forTextStyle: .body)
+//        label.adjustsFontSizeToFitWidth
+        label.adjustsFontForContentSizeCategory = true
+        label.textColor = .black
+        label.backgroundColor = .yellow
+//        label.
+//        self.videoPreview.addSubview(label)
+        self.videoPreview.bringSubviewToFront(label)
+    }
+    
+    
+//    let numberOnly = UISwitch(frame: CGRect(x:60,y:0,width: 30,height: 30))
+    @IBAction func numberOnlyToggled(_ sender: Any) {
+        
+    }
+    @IBOutlet weak var numberOnly: UISwitch!
+    func setUpToggle(){
+
+        numberOnly.isUserInteractionEnabled=true
+        numberOnly.isOn=false
+        
+        self.videoPreview.addSubview(numberOnly)
+    }
+    
+    
+    
+    
+    
+    
     
 }

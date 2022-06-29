@@ -138,6 +138,7 @@ class StringTracker {
 	var seenStrings = [String: StringObservation]()
 	var bestCount = Int64(0)
 	var bestString = ""
+    var bestStringFrame = Int64(0)
 
     func logFrame(results: [VNRecognizedTextObservation]) {
         
@@ -161,7 +162,7 @@ class StringTracker {
 		// Also find the (non-pruned) string with the greatest count.
 		for (string, obs) in seenStrings {
 			// Remove previously seen text after 30 frames (~1s).
-			if obs.lastSeen < frameIndex - 90 {
+			if obs.lastSeen < frameIndex - 60 {
 				obsoleteStrings.append(string)
 			}
 			
@@ -170,6 +171,7 @@ class StringTracker {
 			if !obsoleteStrings.contains(string) && count > bestCount {
 				bestCount = Int64(count)
 				bestString = string
+                bestStringFrame = frameIndex
 			}
 		}
 		// Remove old strings.
@@ -182,7 +184,7 @@ class StringTracker {
 	
 	func getStableString() -> String? {
 		// Require the recognizer to see the same string at least 10 times.
-		if bestCount >= 6 {
+		if bestCount >= 8 {
 			return bestString
 		} else {
 			return nil
@@ -193,6 +195,7 @@ class StringTracker {
 		seenStrings.removeValue(forKey: string)
 		bestCount = 0
 		bestString = ""
+        bestStringFrame = 0
 	}
     
     
